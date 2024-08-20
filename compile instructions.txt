@@ -1,0 +1,78 @@
+#References
+The only reference is the use of OpenSSL libraries for the implementation of the cryptography functions
+
+# Build Instructions for Multi-Platform Compilation
+
+## 1. Windows (Command-Line Using MinGW)
+### Prerequisites:
+- Install MinGW and add it to the system PATH.
+- Ensure that OpenSSL is installed and its paths are set in the system environment.
+- Ensure that the `openssl` binary and libraries (`libssl.a`, `libcrypto.a`) are available.
+
+### Steps:
+1. Open the Command Prompt or PowerShell.
+2. Navigate to the directory containing your source files.
+3. Compile the project using the following commands:
+   ```bash
+   g++ -o KeyGen key_gen.cpp crypt_func.cpp -lssl -lcrypto -lws2_32 -lwsock32
+   g++ -o Alice Host.cpp crypt_func.cpp -lssl -lcrypto -lws2_32 -lwsock32
+   g++ -o Bob Client.cpp crypt_func.cpp -lssl -lcrypto -lws2_32 -lwsock32
+
+
+4. Run the executables in the following order:
+ 
+KeyGen.exe --> Alice.exe --> Bob.exe
+--------------------------------------------------------------------------------------------------------------------------------
+## 2. Linux (GCC)
+### Prerequisites:
+- Install GCC and OpenSSL development libraries.
+- Open a terminal.
+
+### Steps:
+1. Navigate to the directory containing your source files.
+2. Compile the Alice (Host) executable:
+   ```bash
+   g++ -o KeyGen key_gen.cpp crypt_func.cpp -lssl -lcrypto
+   g++ -o Alice Host.cpp crypt_func.cpp -lssl -lcrypto
+   g++ -o Bob Client.cpp crypt_func.cpp -lssl -lcrypto
+
+3. Run the compiled binaries in the following order:
+
+   ```bash
+   ./KeyGen
+    ./Alice
+    ./Bob
+--------------------------------------------------------------------------------------------------------------------------------
+## 3. macOS (Clang)
+### Prerequisites:
+- Install Xcode command line tools.
+- Install OpenSSL using Homebrew:
+  ```bash
+  brew install openssl
+
+### Steps:
+1. Open the terminal
+
+2. Navigate to the directory containing your source files
+
+3. Compile the files
+   ```bash
+   clang++ -o KeyGen key_gen.cpp crypt_func.cpp -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+   clang++ -o Alice Host.cpp crypt_func.cpp -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+   clang++ -o Bob Client.cpp crypt_func.cpp -I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib -lssl -lcrypto
+
+
+4. Run the compiled binaries
+   ```bash
+   ./KeyGen
+   ./Alice
+   ./Bob
+
+### Key Points:
+- **Include and Library Paths:** The `-I/usr/local/opt/openssl/include` flag specifies the directory for OpenSSL header files, and `-L/usr/local/opt/openssl/lib` specifies the directory for OpenSSL libraries.
+- **Compiling Multiple Executables:** Just like in Linux, separate commands are used to compile `Alice`, `KeyGen`, and `Client` executables to avoid conflicts with multiple `main()` functions.
+
+This section ensures you can compile your project on macOS using `clang++` while properly linking against OpenSSL.
+
+	 
+
